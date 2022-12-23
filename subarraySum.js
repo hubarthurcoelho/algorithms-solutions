@@ -1,9 +1,9 @@
 // [-2,1,-3,4,-1,2,1,-5,4] -> 6
 
 function maxSum(nums) {
-  let sum = nums[0];
-  let max = sum;
-  let start = 1;
+  let sum = 0
+  let max = nums[0]
+  let start = 0
   let finish = nums.length
   while (start < finish) {
     sum += nums[start]
@@ -11,15 +11,13 @@ function maxSum(nums) {
     while (sum > nums[start] && start < finish - 1) {
       start++
       sum += nums[start]
-      if (sum > max) max = sum
+      max = Math.max(sum, max)
     };
+    sum = nums[start]
     max = Math.max(sum, max)
-    sum = nums[start];
-    max = Math.max(sum, max)
-    start++;
+    start++
   }
-  return max;
+  return max
 }
 
-
-console.log(maxSum([1,2,-1,-2,2,1,-2,1]));
+console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
