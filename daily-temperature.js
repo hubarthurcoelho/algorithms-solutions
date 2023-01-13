@@ -3,24 +3,24 @@
 // Quantos dias devo esperar para ter um dia mais quente
 
 function dailyTemperatures(temperatures) {
-  const obj = {};
+  const daysTohigherTemp = [];
   const stack = [];
 
   for (let i = 0; i < temperatures.length; i++) {
     while (temperatures[i] > stack[stack.length - 1]?.value) {
       const topStack = stack[stack.length - 1]
       const days = i - topStack.index;
-      obj[topStack.index] = days;
+      daysTohigherTemp[topStack.index] = days;
       stack.pop();
     }
     if (temperatures[i] < temperatures[i + 1]) {
-      obj[i] = 1;
+      daysTohigherTemp[i] = 1;
       continue;
     }
     stack.push({value: temperatures[i], index: i});
-    obj[i] = 0;
+    daysTohigherTemp[i] = 0;
   }
-  return Object.values(obj)
+  return daysTohigherTemp;
 }
 
 console.log(dailyTemperatures([89,62,70,58,47,47,46,76,100,70]))
