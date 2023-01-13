@@ -5,20 +5,20 @@ import (
 )
 
 func parenthesesValid(s string) bool {
-	mapa := map[rune]rune{
-		'(': ')',
-		'{': '}',
-		'[': ']',
+	mapa := map[string]string{
+		"(": ")",
+		"{": "}",
+		"[": "]",
 	}
 
-	stack := []rune{}
+	stack := []string{}
 
-	for _, value := range s {
+	for _, value := range []rune(s) {
 		switch value {
 		case '(', '{', '[':
-			stack = append(stack, value)
+			stack = append(stack, string(value))
 		case ')', '}', ']':
-			if len(stack) == 0 || value != mapa[stack[len(stack)-1]] {
+			if len(stack) == 0 || string(value) != mapa[stack[len(stack)-1]] {
 				return false
 			}
 			stack = stack[:len(stack)-1]
