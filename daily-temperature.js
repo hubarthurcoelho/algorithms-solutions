@@ -7,10 +7,9 @@ function dailyTemperatures(temperatures) {
   const stack = [];
 
   for (let i = 0; i < temperatures.length; i++) {
-    while (temperatures[i] > stack[stack.length - 1]?.value) {
-      const topStack = stack[stack.length - 1]
-      const days = i - topStack.index;
-      daysTohigherTemp[topStack.index] = days;
+    while (stack[stack.length - 1] && temperatures[i] > stack[stack.length - 1].value) {
+      const topStack = stack[stack.length - 1];
+      daysTohigherTemp[topStack.index] = i - topStack.index; // days
       stack.pop();
     }
     if (temperatures[i] < temperatures[i + 1]) {
@@ -24,3 +23,4 @@ function dailyTemperatures(temperatures) {
 }
 
 console.log(dailyTemperatures([89,62,70,58,47,47,46,76,100,70]))
+// [8, 1, 5, 4, 3, 2, 1, 1, 0, 0]
