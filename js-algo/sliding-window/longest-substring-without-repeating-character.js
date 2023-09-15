@@ -1,23 +1,19 @@
 function lengthOfLongestSubstring(s) {
-  let leftBoundary = 0;
-  let rightBoundary = 0;
-  let maxLength = 0;
-  const set = new Set();
+  let maxLength = 0, map = {}, leftIndex = 0
+    
+  for (let i = 0; i < s.length; i++) {
 
-  while (rightBoundary < s.length) {
-    if (!set.has(s[rightBoundary])) {
-      set.add(s[rightBoundary]);
-      maxLength = Math.max(maxLength, set.size);
+    map[s[i]] = (map[s[i]] || 0) + 1;
 
-      rightBoundary++;
-    } else {
-      set.delete(s[leftBoundary]);
-
-      leftBoundary++;
+    while(map[s[i]] > 1) {
+      map[s[leftIndex]]--;
+      leftIndex++;
     }
+
+    maxLength = Math.max(maxLength, i - leftIndex + 1);
   }
 
   return maxLength;
 }
 
-console.log(lengthOfLongestSubstring('abca'));
+console.log(lengthOfLongestSubstring('pwwkew'));

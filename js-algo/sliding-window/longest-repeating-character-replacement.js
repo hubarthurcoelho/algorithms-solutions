@@ -1,39 +1,30 @@
 function characterReplacement(s, k) {
-  let left = 0;
-  let right = 0;
-  let maxLength = 0;
-  let map = {};
-  let cMost = s[0];
+  let map = {}, leftIndex = 0, maxCharLength = 0, maxFullLength = 0;
 
-  while(right < s.length) {
-    map[s[right]] = (map[s[right]] || 0) + 1;
-    //   if(!map[s[right]]) {
-    //       map[s[right]] = 0;
-    //   }
-    //   map[s[right]]++;
+  for (let i = 0; i < s.length; i++) {
+    map[s[i]] = (map[s[i]] || 0) + 1;
 
-    // cMost = Math.max(map[s[right]], map[cMost])
-    if (map[s[right]] >= map[cMost]) {
-        cMost = s[right]
+    maxCharLength = Math.max(maxCharLength, map[s[i]]);
+
+    // when to shrink the window
+    if (i - leftIndex + 1 - maxCharLength > k) {
+      map[s[leftIndex]]--;
+      leftIndex++;
     }
 
-    if (right - left + 1 - map[cMost] > k) {
-      map[s[left]]--;
-      left++;
-    }
-
-    //   while(right - left+1 > map[cMost] + k) {
-    //       map[s[left]]--;
-    //       left++;
-    //       cMost = Object.keys(map).reduce((a, b) => map[a] > map[b] ? a : b);
-    //   }
-
-    maxLength = Math.max(maxLength, right-left+1);
-
-    right++;
+    maxFullLength = Math.max(maxFullLength, i - leftIndex + 1);
   }
 
-  return maxLength;
+  return maxFullLength;
 };
 
 console.log(characterReplacement('ABCDEF', 2));
+
+// 'AABB', K = 2 -> 4
+// when should the window close, or shrink?
+// if the window size is greater than the most repeated character + k available replacements
+// if windowSize > mostRepeatedChar + k
+// if windowSize - mostRepeatedChar > k
+// what is the max length?
+// 'AAAA' -> maxCharLength = 4, maxFullLength = 4, k = 2
+// 'AABB' -> maxCharLength = 4, maxFullLength = 4, k = 2
